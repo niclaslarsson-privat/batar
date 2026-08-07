@@ -72,6 +72,13 @@
     background: #fdecea; color: #c62828; border-radius: 6px; padding: 2px 8px; margin-top: 2px;
   }
   .history { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+  .seller {
+    display: inline-block; font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.04em; padding: 2px 8px; border-radius: 6px; margin-top: 4px;
+  }
+  .seller.privat { background: #e3f4ea; color: #1d7a4f; }
+  .seller.foretag { background: #e7eff6; color: #0b5e8a; }
+
   .title { font-weight: 600; font-size: 1rem; }
   .engine {
     font-size: 0.95rem; font-weight: 700; color: var(--ink);
@@ -163,6 +170,7 @@ const listings = [
     engineNote: "Nytt drev april 2024",
     cur: "SEK", priceHistory: [{d:"6 aug", p:950000}], year: 2008, loc: "Motala (Vättern)",
     published: "21 juli",
+    seller: "Företag",
     facts: "Beskrivs som mycket välskött. Säljs via varv.",
     links: [{label:"Öppna på Blocket →", url:"https://www.blocket.se/mobility/item/24996665"}],
     badge: null, badgeText: null
@@ -173,6 +181,7 @@ const listings = [
     engineNote: "Regelbunden service hos auktoriserad verkstad",
     cur: "SEK", priceHistory: [{d:"6 aug", p:1079000}], year: 2008, loc: "Österskär",
     published: "5 augusti",
+    seller: "Företag",
     facts: "Nya mattor, nya batterier och ny gasolspis inför säsongen 2026. Kampanjpris.",
     links: [{label:"Öppna på Blocket →", url:"https://www.blocket.se/mobility/item/23662205"}],
     badge: "fresh", badgeText: "Ny annons"
@@ -183,6 +192,7 @@ const listings = [
     engineNote: null,
     cur: "SEK", priceHistory: [{d:"6 aug", p:1150000}], year: 2010, loc: "Myggenäs (Tjörn)",
     published: "25 juli",
+    seller: "Privat",
     facts: "Privatsäljare. Västkusten.",
     links: [{label:"Öppna på Blocket →", url:"https://www.blocket.se/mobility/item/25086198"}],
     badge: null, badgeText: null
@@ -195,6 +205,7 @@ const overBudget = [
     engineNote: null,
     cur: "SEK", priceHistory: [{d:"6 aug", p:1299000}], year: 2012, loc: "Stockholm",
     published: "28 juli",
+    seller: "Företag",
     facts: "Beskrivs som toppskick. Ca 99 000 kr över budget.",
     links: [{label:"Öppna på Blocket →", url:"https://www.blocket.se/mobility/item/22581957"}]
   },
@@ -204,6 +215,7 @@ const overBudget = [
     engineNote: null,
     cur: "SEK", priceHistory: [{d:"6 aug", p:1375000}], year: 2012, loc: "Spånga",
     published: "5 juli",
+    seller: "Privat",
     facts: "37 knop. Trailer ingår – kan motivera mellanskillnaden. Privatsäljare.",
     links: [{label:"Öppna på Blocket →", url:"https://www.blocket.se/mobility/item/24060431"}]
   }
@@ -233,7 +245,8 @@ function card(l) {
     : "";
   return `<div class="card" data-c="${l.country}">
     <div class="top">
-      ${priceBlock}
+      <div>${priceBlock}
+      ${l.seller ? `<span class="seller ${l.seller === "Privat" ? "privat" : "foretag"}">${l.seller === "Privat" ? "Privat säljare" : "Företag/handlare"}</span>` : ""}</div>
       <div class="flag">${l.flag}</div>
     </div>
     ${histLine}

@@ -72,6 +72,13 @@
     background: #fdecea; color: #c62828; border-radius: 6px; padding: 2px 8px; margin-top: 2px;
   }
   .history { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+  .seller {
+    display: inline-block; font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.04em; padding: 2px 8px; border-radius: 6px; margin-top: 4px;
+  }
+  .seller.privat { background: #e3f4ea; color: #1d7a4f; }
+  .seller.foretag { background: #e7eff6; color: #0b5e8a; }
+
   .title { font-weight: 600; font-size: 1rem; }
   .engine {
     font-size: 0.95rem; font-weight: 700; color: var(--ink);
@@ -163,6 +170,7 @@ const listings = [
     engineNote: "Drev genomgånget och servat 2025, ny Duoprop 2023",
     cur: "SEK", priceHistory: [{d:"6 aug", p:945000}], year: 2006, loc: "Huskvarna (Vättern)",
     published: "1 juli",
+    seller: "Privat",
     facts: "32 knop toppfart. Ny Raymarine Axiom 12 (2026), solceller, bogpropeller, varvsservad sedan 2021. Privatsäljare.",
     links: [{label:"Öppna på Blocket →", url:"https://www.blocket.se/mobility/item/24302092"}],
     badge: null, badgeText: null
@@ -173,6 +181,7 @@ const listings = [
     engineNote: "DPH-E-drev bytt 2020 – bara ca 100 h på nya drevet",
     cur: "EUR", priceHistory: [{d:"6 aug", p:92000}], year: 2007, loc: "Tammisaari/Raasepori (Skåldö)",
     published: "3 augusti",
+    seller: "Företag",
     facts: "Raymarine plotter & radar, teakdäck. Annonseras även på Blocket via Hydrolink i Bromma (1 011 000 kr).",
     links: [
       {label:"Nettivene →", url:"https://www.nettivene.com/moottorivene/grandezza/1047854"},
@@ -187,6 +196,7 @@ const listings = [
     engineNote: "Nya septikslangar 2026",
     cur: "SEK", priceHistory: [{d:"6 aug", p:1190000}], year: 2008, loc: "Bohus-Björkö (Göteborgs skärgård)",
     published: "ca 3 augusti",
+    seller: "Privat",
     facts: "Marschfart ca 27 knop, toppfart ca 35 knop. Dieseltank 520 l. Privatsäljare. Precis under budgettaket.",
     links: [{label:"Öppna på Blocket →", url:"https://www.blocket.se/mobility/item/25135121"}],
     badge: "fresh", badgeText: "Aktuell annons"
@@ -199,6 +209,7 @@ const overBudget = [
     engineNote: null,
     cur: "EUR", priceHistory: [{d:"6 aug", p:129900}], year: 2006, loc: "Helsingfors",
     published: "okänt datum",
+    seller: "Privat",
     facts: "Ca 224 000 kr över budget – men prisförhandling är vanligt på begagnatmarknaden.",
     links: [{label:"Nettivene →", url:"https://www.nettivene.com/moottorivene/grandezza/1046998"}]
   }
@@ -228,7 +239,8 @@ function card(l) {
     : "";
   return `<div class="card" data-c="${l.country}">
     <div class="top">
-      ${priceBlock}
+      <div>${priceBlock}
+      ${l.seller ? `<span class="seller ${l.seller === "Privat" ? "privat" : "foretag"}">${l.seller === "Privat" ? "Privat säljare" : "Företag/handlare"}</span>` : ""}</div>
       <div class="flag">${l.flag}</div>
     </div>
     ${histLine}
