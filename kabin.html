@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kabinbåtar med D6 till salu – under 1,2 mkr</title>
+<style>
+  :root {
+    --bg: #f4f6f8;
+    --card: #ffffff;
+    --ink: #1a2733;
+    --muted: #5b6b7a;
+    --accent: #0b5e8a;
+    --accent-2: #0e7b9e;
+    --line: #e3e8ed;
+    --good: #1d7a4f;
+    --warn: #b06a00;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  header {
+    background: linear-gradient(135deg, #0b3d5c 0%, #0e6a94 100%);
+    color: #fff;
+    padding: 40px 24px 32px;
+  }
+  .wrap { max-width: 980px; margin: 0 auto; }
+  a.back {
+    display: inline-block; color: #fff; text-decoration: none; font-size: 0.9rem;
+    font-weight: 600; background: rgba(255,255,255,0.14); border: 1px solid rgba(255,255,255,0.3);
+    padding: 6px 14px; border-radius: 999px; margin-bottom: 16px;
+  }
+  a.back:hover { background: rgba(255,255,255,0.25); }
+
+  header h1 { font-size: 1.9rem; font-weight: 700; letter-spacing: -0.02em; }
+  header p.sub { margin-top: 6px; opacity: 0.9; font-size: 1rem; }
+  .meta-row { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 10px; font-size: 0.85rem; }
+  .meta-chip {
+    background: rgba(255,255,255,0.14);
+    border: 1px solid rgba(255,255,255,0.25);
+    padding: 4px 12px; border-radius: 999px;
+  }
+  main { padding: 28px 24px 60px; }
+  .toolbar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 20px; }
+  .toolbar span.lbl { font-size: 0.85rem; color: var(--muted); margin-right: 4px; }
+  .btn {
+    border: 1px solid var(--line); background: var(--card); color: var(--ink);
+    padding: 6px 14px; border-radius: 999px; font-size: 0.87rem; cursor: pointer;
+  }
+  .btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 16px; }
+  .card {
+    background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+    padding: 18px 18px 16px; display: flex; flex-direction: column; gap: 8px;
+    box-shadow: 0 1px 3px rgba(16,35,50,0.06);
+  }
+  .card .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 8px; }
+  .flag { font-size: 1.1rem; }
+  .price { font-size: 1.35rem; font-weight: 700; color: var(--accent); letter-spacing: -0.01em; }
+  .price small { font-size: 0.8rem; font-weight: 500; color: var(--muted); display: block; }
+  .price.drop { color: #c62828; }
+  .oldprice {
+    font-size: 0.85rem; font-weight: 500; color: var(--muted);
+    text-decoration: line-through; display: block;
+  }
+  .dropbadge {
+    display: inline-block; font-size: 0.75rem; font-weight: 700;
+    background: #fdecea; color: #c62828; border-radius: 6px; padding: 2px 8px; margin-top: 2px;
+  }
+  .history { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+  .seller {
+    display: inline-block; font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.04em; padding: 2px 8px; border-radius: 6px; margin-top: 4px;
+  }
+  .seller.privat { background: #e3f4ea; color: #1d7a4f; }
+  .seller.foretag { background: #e7eff6; color: #0b5e8a; }
+
+  .title { font-weight: 600; font-size: 1rem; }
+  .engine {
+    font-size: 0.95rem; font-weight: 700; color: var(--ink);
+    background: #eef4f8; border: 1px solid #d5e3ec; border-radius: 8px;
+    padding: 6px 10px;
+  }
+  .engine small { display: block; font-weight: 500; color: var(--muted); font-size: 0.78rem; }
+  .facts { font-size: 0.88rem; color: var(--muted); }
+  .facts b { color: var(--ink); font-weight: 600; }
+  .links { margin-top: auto; display: flex; flex-wrap: wrap; gap: 12px; }
+  .links a {
+    text-decoration: none; font-size: 0.88rem;
+    color: var(--accent-2); font-weight: 600; border-bottom: 1px solid transparent;
+  }
+  .links a:hover { border-bottom-color: var(--accent-2); }
+  .badge {
+    display: inline-block; font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.04em; padding: 2px 8px; border-radius: 6px;
+  }
+  .badge.fresh { background: #e3f4ea; color: var(--good); }
+  .badge.info { background: #e7eff6; color: var(--accent); }
+  h2.section {
+    margin: 34px 0 14px; font-size: 1.15rem; font-weight: 700; color: var(--ink);
+    border-top: 1px solid var(--line); padding-top: 22px;
+  }
+  .dim .card { opacity: 0.78; }
+  .note {
+    margin-top: 30px; background: #eef4f8; border: 1px solid #d5e3ec; border-radius: 12px;
+    padding: 16px 18px; font-size: 0.88rem; color: #33475a;
+  }
+  .note h3 { font-size: 0.95rem; margin-bottom: 6px; }
+  .note ul { margin: 8px 0 0 18px; }
+  .note li { margin-bottom: 4px; }
+  .note a { color: var(--accent-2); }
+  footer { text-align: center; font-size: 0.8rem; color: var(--muted); padding: 0 24px 40px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <a class="back" href="https://niclaslarsson-privat.github.io/batar/">&larr; Startsidan</a>
+    <h1>Kabinbåtar med D6</h1>
+    <p class="sub">Blandade modeller · under 1 200 000 kr · endast Volvo Penta D6</p>
+    <div class="meta-row">
+      <span class="meta-chip">Uppdaterad: 7 augusti 2026</span>
+      <span class="meta-chip">Kurs: 1 € = 10,96 kr (5 aug 2026)</span>
+      <span class="meta-chip" id="count-chip"></span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <div class="toolbar">
+      <span class="lbl">Visa:</span>
+      <button class="btn active" data-f="all">Alla</button>
+      <button class="btn" data-f="SE">🇸🇪 Sverige</button>
+      <button class="btn" data-f="FI">🇫🇮 Finland</button>
+      <span class="lbl" style="margin-left:12px">Sortera:</span>
+      <button class="btn" id="sort-btn" data-dir="asc">Pris: lägst först</button>
+    </div>
+
+    <div class="grid" id="grid"></div>
+
+    <h2 class="section">Över budget – men värda att bevaka</h2>
+    <div class="grid dim" id="grid-over"></div>
+
+    <div class="note">
+      <h3>Om listan</h3>
+      <p>Ögonblicksbild 7 augusti 2026. Kompletterande lista med kabinbåtar/hardtop-cruisers av andra märken än Grandezza 31 OC och Aquador 28 HT – samma krav: Volvo Penta D6 och under 1,2 mkr. Hämtat live från Blocket (Sverige). Modeller som bevakas: Grandezza 31 DC, Nimbus (Nova/Coupé/300R), Sargo/Minor m.fl.</p>
+      <ul>
+        <li>Live-sök: <a href="https://www.blocket.se/mobility/search/boat?q=grandezza%2031%20dc" target="_blank">Grandezza 31 DC</a> · <a href="https://www.blocket.se/mobility/search/boat?q=nimbus" target="_blank">Nimbus</a> · <a href="https://www.blocket.se/mobility/search/boat?q=sargo" target="_blank">Sargo</a></li>
+      </ul>
+    </div>
+  </div>
+</main>
+
+<footer>Kabinbåtsbevakning D6 · byggd med Claude · finska priser omräknade från EUR (10,96 kr/€)</footer>
+
+<script>
+const RATE = 10.9635;
+// priceHistory: äldsta först, senaste sist. p i annonsens valuta (cur).
+// Vid prissänkning visas priset i rött och tidigare pris sparas synligt.
+const listings = [
+  {
+    country: "SE", flag: "🇸🇪", title: "Grandezza 31 DC 2008 – Båtförmedlarna",
+    engine: "Volvo Penta D6-330 · 330 hk · timmar ej angivna",
+    engineNote: "Fråga säljaren om gångtimmar",
+    cur: "SEK", priceHistory: [{d:"7 aug", p:945000}], year: 2008, loc: "Kullavik (Göteborg)",
+    published: "12 juli",
+    seller: "Företag",
+    facts: "Samma skrov som 31 OC men med större salong/kabin. Bogpropeller, välutrustad, varvsservad.",
+    links: [{label:"Öppna på Blocket →", url:"https://www.blocket.se/mobility/item/22824727"}],
+    badge: null, badgeText: null
+  },
+  {
+    country: "SE", flag: "🇸🇪", title: "Grandezza 31 DC 2008",
+    engine: "Volvo Penta D6-330 · 330 hk · 580 h",
+    engineNote: null,
+    cur: "SEK", priceHistory: [{d:"7 aug", p:975000}], year: 2008, loc: "Viken (Höganäs)",
+    published: "21 juni",
+    seller: "Privat",
+    facts: "Lägst timmar av 31 DC-båtarna i listan.",
+    links: [{label:"Öppna på Blocket →", url:"https://www.blocket.se/mobility/item/24031552"}],
+    badge: null, badgeText: null
+  },
+  {
+    country: "SE", flag: "🇸🇪", title: "Nimbus 30 S Nova 2007",
+    engine: "Volvo Penta D6-310 · 310 hk · 765 h",
+    engineNote: "Drev renoverat 2026 – nya tätningar, lager och knutkors, nya rostfria propellrar",
+    cur: "SEK", priceHistory: [{d:"7 aug", p:985000}], year: 2007, loc: "Marstrand",
+    published: "ca 6 augusti",
+    seller: "Privat",
+    facts: "Klassisk kvalitetscruiser med stor sittbrunn och rejäl kabin. 33 knop.",
+    links: [{label:"Öppna på Blocket →", url:"https://www.blocket.se/mobility/item/25451928"}],
+    badge: "fresh", badgeText: "Ny annons"
+  },
+  {
+    country: "SE", flag: "🇸🇪", title: "Grandezza 31 DC 2008 – välutrustad",
+    engine: "Volvo Penta D6-330 · 330 hk · 918 h",
+    engineNote: "Inga kända eller planerade serviceåtgärder",
+    cur: "SEK", priceHistory: [{d:"7 aug", p:1079000}], year: 2008, loc: "Kalix",
+    published: "14 juni",
+    seller: "Privat",
+    facts: "Omfattande Garmin-paket, bogpropeller med fjärrkontroll. 36 knop.",
+    links: [{label:"Öppna på Blocket →", url:"https://www.blocket.se/mobility/item/24082884"}],
+    badge: null, badgeText: null
+  },
+  {
+    country: "SE", flag: "🇸🇪", title: "Nimbus 300 R Mk II 2008",
+    engine: "Volvo Penta D6-370 · 370 hk · ca 860 h",
+    engineNote: "Nytt DPH-E-drev, styrcylinder och propellrar 2020",
+    cur: "SEK", priceHistory: [{d:"7 aug", p:1095000}], year: 2008, loc: "Västra Frölunda",
+    published: "ca 4 augusti",
+    seller: "Privat",
+    facts: "Kategoriserad som kabinbåt på Blocket. Snabb – 40 knop. Originalmotor.",
+    links: [{label:"Öppna på Blocket →", url:"https://www.blocket.se/mobility/item/21854119"}],
+    badge: "fresh", badgeText: "Aktuell annons"
+  },
+  {
+    country: "SE", flag: "🇸🇪", title: "Nimbus 30s Nova – Malmöns Marina",
+    engine: "Volvo Penta D6-310 · 310 hk · ca 900 h",
+    engineNote: null,
+    cur: "SEK", priceHistory: [{d:"7 aug", p:1190000}], year: "Årsmodell: se annons", loc: "Bohus-Malmön",
+    published: "ca 5 augusti",
+    seller: "Företag",
+    facts: "Säljs via marina. Precis under budgettaket.",
+    links: [{label:"Öppna på Blocket →", url:"https://www.blocket.se/mobility/item/22023501"}],
+    badge: "fresh", badgeText: "Aktuell annons"
+  }
+];
+const overBudget = [
+  {
+    country: "SE", flag: "🇸🇪", title: "Sargo 28 2013",
+    engine: "Volvo Penta D6-370 · 370 hk",
+    engineNote: null,
+    cur: "SEK", priceHistory: [{d:"7 aug", p:1425000}], year: 2013, loc: "Österskär",
+    published: "24 juli",
+    seller: "Privat",
+    facts: "Rejäl finsk allvädersbåt (fd Minor). Ca 225 000 kr över budget men fem år nyare än det mesta i listan.",
+    links: [{label:"Öppna på Blocket →", url:"https://www.blocket.se/mobility/item/25067301"}]
+  }
+];
+
+let filter = "all";
+let dir = "asc";
+const fmt = n => n.toLocaleString("sv-SE") + " kr";
+const toSEK = (l, p) => l.cur === "EUR" ? Math.round(p * RATE) : p;
+const curPrice = l => l.priceHistory[l.priceHistory.length - 1].p;
+const curSEK = l => toSEK(l, curPrice(l));
+const fmtNative = (l, p) => l.cur === "EUR" ? p.toLocaleString("sv-SE") + " €" : fmt(p);
+
+function card(l) {
+  const hist = l.priceHistory;
+  const cp = hist[hist.length - 1].p;
+  const pp = hist.length > 1 ? hist[hist.length - 2].p : null;
+  const dropped = pp !== null && cp < pp;
+  const priceBlock = `
+    <div class="price${dropped ? " drop" : ""}">${fmt(toSEK(l, cp))}
+      ${l.cur === "EUR" ? `<small>${cp.toLocaleString("sv-SE")} € omräknat</small>` : ""}
+      ${dropped ? `<span class="oldprice">Tidigare: ${fmtNative(l, pp)}</span>
+        <span class="dropbadge">▼ Prissänkt −${fmtNative(l, pp - cp)}</span>` : ""}
+    </div>`;
+  const histLine = hist.length > 1
+    ? `<div class="history">Prishistorik: ${hist.map(h => `${h.d}: ${fmtNative(l, h.p)}`).join(" → ")}</div>`
+    : "";
+  return `<div class="card" data-c="${l.country}">
+    <div class="top">
+      <div>${priceBlock}
+      ${l.seller ? `<span class="seller ${l.seller === "Privat" ? "privat" : "foretag"}">${l.seller === "Privat" ? "Privat säljare" : "Företag/handlare"}</span>` : ""}</div>
+      <div class="flag">${l.flag}</div>
+    </div>
+    ${histLine}
+    <div class="title">${l.title}</div>
+    <div class="engine">⚙️ ${l.engine}${l.engineNote ? `<small>${l.engineNote}</small>` : ""}</div>
+    <div class="facts"><b>${l.year}</b> · ${l.loc} · Publicerad: ${l.published ?? "okänt"}</div>
+    <div class="facts">${l.facts}</div>
+    ${l.badgeText ? `<div><span class="badge ${l.badge}">${l.badgeText}</span></div>` : ""}
+    <div class="links">${l.links.map(k => `<a href="${k.url}" target="_blank" rel="noopener">${k.label}</a>`).join("")}</div>
+  </div>`;
+}
+
+function render() {
+  const sorted = [...listings].sort((a, b) => dir === "asc" ? curSEK(a) - curSEK(b) : curSEK(b) - curSEK(a));
+  const shown = sorted.filter(l => filter === "all" || l.country === filter);
+  document.getElementById("grid").innerHTML = shown.map(card).join("");
+  const over = overBudget.filter(l => filter === "all" || l.country === filter);
+  document.getElementById("grid-over").innerHTML = over.map(card).join("");
+  document.getElementById("count-chip").textContent =
+    `${shown.length} båtar under 1,2 mkr${filter !== "all" ? (filter === "SE" ? " i Sverige" : " i Finland") : ""}`;
+}
+
+document.querySelectorAll(".btn[data-f]").forEach(b => b.addEventListener("click", () => {
+  document.querySelectorAll(".btn[data-f]").forEach(x => x.classList.remove("active"));
+  b.classList.add("active");
+  filter = b.dataset.f;
+  render();
+}));
+document.getElementById("sort-btn").addEventListener("click", e => {
+  dir = dir === "asc" ? "desc" : "asc";
+  e.target.textContent = dir === "asc" ? "Pris: lägst först" : "Pris: högst först";
+  render();
+});
+render();
+</script>
+</body>
+</html>
